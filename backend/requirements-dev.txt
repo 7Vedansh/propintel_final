@@ -1,0 +1,24 @@
+# Core backend dependencies for the FastAPI app and SQLite-backed demo endpoints.
+fastapi
+uvicorn[standard]
+loguru
+pydantic
+pydantic-settings
+python-dotenv
+sqlalchemy
+requests
+python-multipart
+geopy
+
+# Imported by backend utility/data modules.
+numpy
+pandas
+pillow
+imagehash
+joblib
+transformers
+torch
+torchvision
+
+# Hyperlocal Event Intelligence — official-source scraping.
+beautifulsoup4

@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic-settings
+python-dotenv
+loguru
+requests
+beautifulsoup4
+pillow
+python-multipart

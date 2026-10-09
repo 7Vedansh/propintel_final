@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PropIntel | Collateral Intelligence</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "on-tertiary-container": "#e3d5ff",
+              "error": "#ba1a1a",
+              "tertiary-fixed": "#e9ddff",
+              "surface-tint": "#4d44e3",
+              "primary-fixed-dim": "#c3c0ff",
+              "on-secondary": "#ffffff",
+              "surface-dim": "#d8dadc",
+              "primary": "#3525cd",
+              "surface-container-high": "#e6e8ea",
+              "on-tertiary-fixed-variant": "#5516be",
+              "surface-container": "#eceef0",
+              "on-primary-fixed-variant": "#3323cc",
+              "primary-container": "#4f46e5",
+              "on-surface-variant": "#464555",
+              "on-surface": "#191c1e",
+              "surface-container-lowest": "#ffffff",
+              "surface-bright": "#eef2f6",
+              "secondary-fixed-dim": "#c0c1ff",
+              "on-background": "#191c1e",
+              "inverse-on-surface": "#eff1f3",
+              "background": "#eef2f6",
+              "on-primary-container": "#dad7ff",
+              "on-tertiary": "#ffffff",
+              "outline-variant": "#c7c4d8",
+              "tertiary-fixed-dim": "#d0bcff",
+              "outline": "#777587",
+              "secondary-container": "#6063ee",
+              "on-secondary-container": "#fffbff",
+              "secondary-fixed": "#e1e0ff",
+              "error-container": "#ffdad6",
+              "on-primary-fixed": "#0f0069",
+              "surface-container-low": "#f2f4f6",
+              "on-secondary-fixed-variant": "#2f2ebe",
+              "tertiary-container": "#6f3dd9",
+              "primary-fixed": "#e2dfff",
+              "inverse-surface": "#2d3133",
+              "on-error": "#ffffff",
+              "tertiary": "#571ac0",
+              "inverse-primary": "#c3c0ff",
+              "surface-variant": "#e0e3e5",
+              "surface-container-highest": "#e0e3e5",
+              "secondary": "#4648d4",
+              "on-secondary-fixed": "#07006c",
+              "on-tertiary-fixed": "#23005c",
+              "on-primary": "#ffffff",
+              "surface": "#eef2f6"
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Manrope"],
+              "label": ["Inter"],
+              "mono": ["JetBrains Mono"]
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        color: #191c1e;
+        font-family: Manrope, sans-serif;
+      }
+      .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined';
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

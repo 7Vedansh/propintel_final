@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: PropIntel-db
+    environment:
+      POSTGRES_DB: PropIntel
+      POSTGRES_USER: PropIntel
+      POSTGRES_PASSWORD: PropIntel
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U PropIntel -d PropIntel"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - PropIntel-net
+
+  # Ollama (Local LLM Service)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: PropIntel-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      OLLAMA_KEEP_ALIVE: 24h
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - PropIntel-net
+    # Pre-pull models on startup
+    command: |
+      bash -c "
+      echo 'Pulling models...' &&
+      ollama pull qwen2-vl:7b &&
+      ollama pull llama2:7b &&
+      ollama pull nomic-embed-text &&
+      ollama serve
+      "
+
+  # PropIntel Backend + Frontend
+  PropIntel:
+    build: .
+    container_name: PropIntel-app
+    depends_on:
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://PropIntel:PropIntel@db:5432/PropIntel
+      OLLAMA_BASE_URL: http://ollama:11434
+      VITE_API_URL: http://localhost:8000
+    ports:
+      - "8000:8000"  # Backend API
+      - "3000:3000"  # Frontend
+    volumes:
+      - ./backend:/app/backend
+      - ./src:/app/src
+      - PropIntel_cache:/app/data
+    networks:
+      - PropIntel-net
+    restart: unless-stopped
+
+  # Optional: pgAdmin for database management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: PropIntel-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@PropIntel.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - PropIntel-net
+
+volumes:
+  postgres_data:
+  ollama_data:
+  PropIntel_cache:
+
+networks:
+  PropIntel-net:
+    driver: bridge
+
+# Quick start:
+# docker-compose up -d
+#
+# Access:
+# Frontend:  http://localhost:3000
+# Backend:   http://localhost:8000/docs
+# Database:  localhost:5432 (PropIntel/PropIntel)
+# pgAdmin:   http://localhost:5050 (admin@PropIntel.local/admin)
+#
+# Logs:
+# docker-compose logs -f PropIntel
+# docker-compose logs -f db
+# docker-compose logs -f ollama
+#
+# Stop:
+# docker-compose down
+#
+# Full cleanup (with data):
+# docker-compose down -v
